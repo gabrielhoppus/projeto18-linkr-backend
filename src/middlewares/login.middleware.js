@@ -7,7 +7,6 @@ export async function validateSignUp(req, res, next) {
     try {
         const {rowCount: userFound} =
             await loginRepository.findUser(email);
-        console.log(userFound);
         if (userFound)
             return res.status(409).
                 send('Usuário já cadastrado');
