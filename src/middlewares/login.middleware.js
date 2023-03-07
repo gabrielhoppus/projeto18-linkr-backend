@@ -5,8 +5,9 @@ export async function validateSignUp(req, res, next) {
     const { username, email, password, picture } = req.body;
 
     try {
-        const userFound =
+        const {rowCount: userFound} =
             await loginRepository.findUser(email);
+        console.log(userFound);
         if (userFound)
             return res.status(409).
                 send('Usuário já cadastrado');
@@ -33,8 +34,9 @@ export async function validateSignIn(req, res, next) {
 
     try {
         const userFound =
-            await loginRepository.findUser(email);
-
+            (await loginRepository.findUser(email)).
+                rows[0];
+                
         if (userFound &&
             bcrypt.compareSync(
                 password, userFound.password))
