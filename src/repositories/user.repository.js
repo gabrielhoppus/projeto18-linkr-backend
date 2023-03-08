@@ -11,3 +11,8 @@ export async function findPosts(id){
 export async function findUser(id){
     return db.query(`SELECT * FROM users WHERE id = $1`, [id]);
 }
+
+export async function finderUsers(name){
+    return db.query(
+        `SELECT * FROM users WHERE name LIKE $1%`, [name])
+}
