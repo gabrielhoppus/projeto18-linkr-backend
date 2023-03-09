@@ -44,7 +44,7 @@ export async function validateSignIn(req, res, next) {
 
         else
             return res.status(401).
-                send('Credenciais incorretas');
+                send({message:'Credenciais incorretas'});
 
     } catch (error) {
         console.log(error);

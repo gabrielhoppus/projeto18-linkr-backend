@@ -21,7 +21,8 @@ export async function signIn(req, res) {
             const token = jwt.sign(
                 {
                     id: user.id,
-                    email: user.email
+                    username: user.username,
+                    picture: user.picture,
                 },
                 process.env.SECRET_JWT,
                 { expiresIn: 60 * 60 * 24 * 30 });
