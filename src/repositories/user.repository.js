@@ -2,10 +2,10 @@ import { db } from "../config/database.connection.js";
 
 export async function findPosts(id){
     return db.query(
-        `SELECT users.username, users.picture, posts.text
+        `SELECT username, picture, comment
         FROM users 
         JOIN posts ON users.id = posts.user_id
-        WHERE user.id = $1`, [id]);
+        WHERE users.id = $1`, [id]);
 }
 
 export async function findUser(id){
