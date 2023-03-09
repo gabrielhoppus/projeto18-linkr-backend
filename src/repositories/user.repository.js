@@ -16,3 +16,5 @@ export async function finderUsers(name){
     return db.query(
         `SELECT * FROM users WHERE name LIKE $1%`, [name])
 }
+
+export async function deletePost(id)
