@@ -5,16 +5,16 @@ export async function publishPost(req, res){
 
     const {authorization} = req.headers;
     const token = authorization?.replace('Bearer ', '');
-    const {url} = req.body;
+    const {publishURL, comment} = req.body;
     const urlTitle = '';
     const urlDescription = '';
     const urlImage = '';
 
-    const sessionRows = await getToken(token);
-    if(!sessionRows.rows[0]) return resizeBy,sendStatus(401);
-    const session = sessionRows.rows[0];
+    const userRows = await getToken(token);
+    if(!userRows.rows[0]) return res.sendStatus(401);
+    const user = sessionRows.rows[0];
 
-    urlMetadata(url).then(
+    urlMetadata(publishURL).then(
     function (metadata) {
         urlTitle = metadata.title;
         urlDescription = metadata.description;
@@ -25,7 +25,7 @@ export async function publishPost(req, res){
     })
 
     try {
-        await savePost(url, urlTitle, urlDescription, urlImage)
+        await savePost(user.id, comment, publishURL, urlTitle, urlDescription, urlImage)
         return res.sendStatus(201)
     } catch (error) {
         res.status(500).send(error.message);
@@ -36,6 +36,7 @@ export async function publishPost(req, res){
 export async function getPosts(req, res){
     const posts = await sendPosts();
     try {
+        if(posts.rows[0].length === 0) res.send("There are no posts yet");
         res.send(posts.rows[0]);
     } catch (error) {
         res.status(500).send(error.message);
