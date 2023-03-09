@@ -25,7 +25,7 @@ export async function publishPost(req, res){
     })
 
     try {
-        await db.query(`INSERT INTO posts (url, title, description, image) VALUES ($1, $2, $3, $4)`,
+        await db.query(`INSERT INTO posts (url, title, description, image) VALUES ($1, $2, $3, $4);`,
         [url, urlTitle, urlDescription, urlImage]);
         return res.sendStatus(201)
     } catch (error) {
@@ -35,7 +35,7 @@ export async function publishPost(req, res){
 }
 
 export async function getPosts(){
-    const posts = await db.query(`SELECT * FROM posts`);
+    const posts = await db.query(`SELECT * FROM posts;`);
     try {
         res.send(posts.rows[0]);
     } catch (error) {
