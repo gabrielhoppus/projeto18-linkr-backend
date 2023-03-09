@@ -1,5 +1,5 @@
 import urlMetadata from "url-metadata";
-import { db } from "../config/database.connection.js";
+import { savePost, sendPosts, getToken } from "../repositories/post.repository";
 
 export async function publishPost(req, res){
 
@@ -10,7 +10,7 @@ export async function publishPost(req, res){
     const urlDescription = '';
     const urlImage = '';
 
-    const sessionRows = await db.query(`SELECT * FROM users WHERE token = $1;`, [token]);
+    const sessionRows = await getToken(token);
     if(!sessionRows.rows[0]) return resizeBy,sendStatus(401);
     const session = sessionRows.rows[0];
 
@@ -25,8 +25,7 @@ export async function publishPost(req, res){
     })
 
     try {
-        await db.query(`INSERT INTO posts (url, title, description, image) VALUES ($1, $2, $3, $4);`,
-        [url, urlTitle, urlDescription, urlImage]);
+        await savePost(url, urlTitle, urlDescription, urlImage)
         return res.sendStatus(201)
     } catch (error) {
         res.status(500).send(error.message);
@@ -35,7 +34,7 @@ export async function publishPost(req, res){
 }
 
 export async function getPosts(){
-    const posts = await db.query(`SELECT * FROM posts;`);
+    const posts = await sendPosts();
     try {
         res.send(posts.rows[0]);
     } catch (error) {
