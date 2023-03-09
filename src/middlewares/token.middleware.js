@@ -20,7 +20,7 @@ export async function validateToken(req, res, next) {
                 return res.status(401).send("Invalid Token Error")
             }
 
-            const user = await findUser(decoded.id)
+            const user = (await findUser(decoded.id)).rows[0]
 
             if (!user || !user.id) 
                 return res.status(401).send("Invalid User Token")
