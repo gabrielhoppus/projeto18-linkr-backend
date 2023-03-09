@@ -1,5 +1,5 @@
 import urlMetadata from "url-metadata";
-import { savePost, sendPosts, getToken } from "../repositories/post.repository";
+import { savePost, sendPosts, getToken } from "../repositories/post.repository.js";
 
 export async function publishPost(req, res){
 
@@ -33,7 +33,7 @@ export async function publishPost(req, res){
     
 }
 
-export async function getPosts(){
+export async function getPosts(req, res){
     const posts = await sendPosts();
     try {
         res.send(posts.rows[0]);
