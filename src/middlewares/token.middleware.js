@@ -15,7 +15,7 @@ export async function validateToken(req, res, next) {
         if (schema !== "Bearer")
             return res.status(401).send("Invalid Token Schema");
 
-        jwt.verify(token, process.env.SECRET_JWT, async (error, decoded) => {
+        jwt.verify(token, process.env.SECRET_KEY, async (error, decoded) => {
             if (error){
                 return res.status(401).send("Invalid Token Error")
             }

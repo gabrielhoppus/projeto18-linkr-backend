@@ -24,7 +24,7 @@ export async function signIn(req, res) {
                     username: user.username,
                     picture: user.picture,
                 },
-                process.env.SECRET_JWT,
+                process.env.SECRET_KEY,
                 { expiresIn: 60 * 60 * 24 * 30 });
             await loginRepository.updateUserToken(user, token);
             return res.status(200).send({ token });

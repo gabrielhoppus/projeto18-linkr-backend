@@ -12,7 +12,7 @@ import { findPosts } from "../repositories/user.repository.js";
 export async function publishPost(req, res){
 
     const token = res.locals.session
-    const {publishURL, comment} = req.body;
+    const {url, comment} = req.body;
     const urlTitle = '';
     const urlDescription = '';
     const urlImage = '';
@@ -20,7 +20,7 @@ export async function publishPost(req, res){
     const userRows = await getToken(token);
     const user = userRows.rows[0];
 
-    urlMetadata(publishURL).then(
+    urlMetadata(url).then(
     function (metadata) {
         urlTitle = metadata.title;
         urlDescription = metadata.description;
@@ -31,7 +31,7 @@ export async function publishPost(req, res){
     })
 
     try {
-        await savePost(user.id, comment, publishURL, urlTitle, urlDescription, urlImage)
+        await savePost(user.id, comment, url, urlTitle, urlDescription, urlImage)
         return res.sendStatus(201)
     } catch (error) {
         res.status(500).send(error.message);

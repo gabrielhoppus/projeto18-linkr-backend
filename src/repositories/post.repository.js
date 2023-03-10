@@ -9,7 +9,7 @@ export async function savePost(
   urlImage
 ) {
   return db.query(
-    `INSERT INTO posts (user_id, url, comment, title, description, image) VALUES ($1, $2, $3, $4, $5, $6);`,
+    `INSERT INTO posts (user_id, comment, url, title, description, image) VALUES ($1, $2, $3, $4, $5, $6);`,
     [user, comment, url, urlTitle, urlDescription, urlImage]
   );
 }
