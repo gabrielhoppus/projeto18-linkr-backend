@@ -6,6 +6,7 @@ import {
   deleteHashtags,
   deletePost,
   patchPost,
+  postrepositoryFindPost,
 } from "../repositories/post.repository.js";
 import { findPosts } from "../repositories/user.repository.js";
 
@@ -49,15 +50,18 @@ export async function getPosts(req, res) {
 }
 
 export async function destroyPost(req, res) {
-  const { post_id } = req.params;
+  const { id } = req.params;
+  const user_id = req.user_id;
   try {
-    const posts = await findPosts(post_id);
+    const posts = await postrepositoryFindPost(id);
+
+    console.log(id);
     if (posts.rowCount === 0)
       return res.status(404).send("post does not exist");
 
-    await deleteHashtags(post_id);
+    //await deleteHashtags(post_id);
 
-    await deletePost(post_id);
+    await deletePost(user_id, id);
 
     res.status(204).send("deleted");
   } catch (error) {
@@ -70,7 +74,7 @@ export async function editPost(req, res) {
   const { title, comment } = req.body;
 
   try {
-    const post = await findPosts(post_id);
+    const post = await postrepositoryFindPost(post_id);
     if (post.rowCount === 0) {
       return res.status(404).send("post does not exist");
     }
