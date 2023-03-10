@@ -3,7 +3,10 @@ import {
   savePost,
   sendPosts,
   getToken,
+  deleteHashtags,
+  deletePost,
 } from "../repositories/post.repository.js";
+import { findPosts } from "../repositories/user.repository.js";
 
 export async function publishPost(req, res) {
   const { authorization } = req.headers;
@@ -54,5 +57,17 @@ export async function getPosts(req, res) {
 }
 
 export async function destroyPost(req, res) {
-  const { id } = req.params;
+  const { post_id } = req.params;
+  try {
+    const posts = findPosts(post_id);
+    if (posts.rowCount === 0) return res.sendStatus(404);
+
+    await deleteHashtags(post_id);
+
+    await deletePost(post_id);
+
+    res.status(204).send("deleted");
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 }
