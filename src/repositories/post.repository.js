@@ -27,15 +27,15 @@ export async function deletePost(user_id, id) {
     id,
   ]);
 }
-export async function deleteHashtags(id) {
-  return db.query(`DELETE FROM hashtag_posts WHERE post_id = $1;`, [id]);
+export async function deleteHashtags(user_id, id) {
+  return db.query(`DELETE FROM hashtag_posts WHERE post_id= $1 ;`, [id]);
 }
-export async function patchPost(title, comment, id) {
-  return db.query(`PATCH posts SET title = $1, comment = $2 WHERE id = $3`, [
-    title,
-    comment,
-    id,
-  ]);
+
+export async function patchPost(comment, id, user_id) {
+  return db.query(
+    `UPDATE posts SET comment = $1 WHERE id = $2 AND user_id = $3`,
+    [comment, id, user_id]
+  );
 }
 export async function postrepositoryFindPost(id) {
   return db.query(`SELECT * FROM posts WHERE id = $1`, [id]);

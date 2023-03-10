@@ -55,7 +55,6 @@ export async function destroyPost(req, res) {
   try {
     const posts = await postrepositoryFindPost(id);
 
-    console.log(id);
     if (posts.rowCount === 0)
       return res.status(404).send("post does not exist");
 
@@ -63,23 +62,24 @@ export async function destroyPost(req, res) {
 
     await deletePost(user_id, id);
 
-    res.status(204).send("deleted");
+    return res.status(204).send("deleted");
   } catch (error) {
     res.status(500).send(error.message);
   }
 }
 
 export async function editPost(req, res) {
-  const { post_id } = req.params;
-  const { title, comment } = req.body;
+  const { id } = req.params;
+  const { comment } = req.body;
+  const user_id = req.user_id;
 
   try {
-    const post = await postrepositoryFindPost(post_id);
+    const post = await postrepositoryFindPost(id);
     if (post.rowCount === 0) {
       return res.status(404).send("post does not exist");
     }
 
-    await patchPost(title, comment, post_id);
+    await patchPost(comment, id, user_id);
 
     return res.status(201).send("post edited");
   } catch (error) {
