@@ -21,11 +21,14 @@ export async function sendPosts() {
 export async function getToken(token) {
   return db.query(`SELECT * FROM users WHERE token = $1;`, [token]);
 }
-export async function deletePost(id) {
-  return db.query(`DELETE * FROM posts WHERE id = $1;`, [id]);
+export async function deletePost(user_id, id) {
+  return db.query(`DELETE FROM posts WHERE user_id = $1 AND id= $2;`, [
+    user_id,
+    id,
+  ]);
 }
 export async function deleteHashtags(id) {
-  return db.query(`DELETE * FROM hashtag_posts WHERE post_id = $1;`, [id]);
+  return db.query(`DELETE FROM hashtag_posts WHERE post_id = $1;`, [id]);
 }
 export async function patchPost(title, comment, id) {
   return db.query(`PATCH posts SET title = $1, comment = $2 WHERE id = $3`, [
@@ -33,4 +36,7 @@ export async function patchPost(title, comment, id) {
     comment,
     id,
   ]);
+}
+export async function postrepositoryFindPost(id) {
+  return db.query(`SELECT * FROM posts WHERE id = $1`, [id]);
 }
