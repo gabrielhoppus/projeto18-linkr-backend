@@ -5,6 +5,7 @@ import { findUser } from "../repositories/user.repository.js";
 dotenv.config();
 
 export async function validateToken(req, res, next) {
+
   const { authorization } = req.headers;
   const parts = authorization?.split(" ");
 
@@ -33,4 +34,4 @@ export async function validateToken(req, res, next) {
   } catch (error) {
     return res.status(500).send(error);
   }
-}
+

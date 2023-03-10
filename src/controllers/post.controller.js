@@ -42,8 +42,8 @@ export async function publishPost(req, res) {
 export async function getPosts(req, res) {
   const posts = await sendPosts();
   try {
-    if (!posts.rowCount) res.send("There are no posts yet");
-    res.send(posts.rows);
+    if (!posts.rowCount) return res.send({message: "There are no posts yet"});
+    return res.send(posts.rows);
   } catch (error) {
     res.status(500).send(error.message);
   }
