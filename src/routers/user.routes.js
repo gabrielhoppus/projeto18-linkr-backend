@@ -5,6 +5,6 @@ import { validateToken } from '../middlewares/token.middleware.js';
 const router = Router();
 
 router.get('/user/:id', validateToken, getUser, getPosts)
-router.get('/users', validateToken, searchUser)
+router.get('/users', searchUser)
 
 export default router
