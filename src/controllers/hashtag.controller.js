@@ -4,11 +4,11 @@ import hashTagRepository from "../repositories/hashtag.repository.js";
 
 export async function postHashTags(req,res){
 
-    const hashTag = req.body
+    const {name} = req.body
 
     try {
 
-        await hashTagRepository.postHashTag(hashTag);
+        await hashTagRepository.postHashTag(name);
 
         return res.sendStatus(201);
 
@@ -17,6 +17,22 @@ export async function postHashTags(req,res){
     }
 
 }
+
+export async function getHashTags(req,res){
+
+    try {
+
+        const listOfHashTags = await hashTagRepository.fromHashTag();
+
+        return res.send(listOfHashTags.rows[0]).status(200);
+
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+
+}
+
+
 
 export async function getPostsFromHashTag(req, res) {
 

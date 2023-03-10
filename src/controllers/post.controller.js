@@ -3,16 +3,14 @@ import { savePost, sendPosts, getToken } from "../repositories/post.repository.j
 
 export async function publishPost(req, res){
 
-    const {authorization} = req.headers;
-    const token = authorization?.replace('Bearer ', '');
+    const token = res.locals.session
     const {publishURL, comment} = req.body;
     const urlTitle = '';
     const urlDescription = '';
     const urlImage = '';
 
     const userRows = await getToken(token);
-    if(!userRows.rows[0]) return res.sendStatus(401);
-    const user = sessionRows.rows[0];
+    const user = userRows.rows[0];
 
     urlMetadata(publishURL).then(
     function (metadata) {
