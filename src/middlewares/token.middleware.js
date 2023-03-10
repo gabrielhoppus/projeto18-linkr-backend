@@ -5,31 +5,33 @@ import { findUser } from "../repositories/user.repository.js";
 dotenv.config();
 
 export async function validateToken(req, res, next) {
-    const { authorization } = req.headers;
-    const parts = authorization?.split(" ");
 
-    try {
-        if (!authorization || parts.length !== 2)
-            return res.status(401).send("Invalid Token");
-        const [schema, token] = parts;
+  const { authorization } = req.headers;
+  const parts = authorization?.split(" ");
 
-        if (schema !== "Bearer")
-            return res.status(401).send("Invalid Token Schema");
+  try {
+    if (!authorization || parts.length !== 2)
+      return res.status(401).send("Invalid Token");
+    const [schema, token] = parts;
 
-        jwt.verify(token, process.env.SECRET_KEY, async (error, decoded) => {
-            if (error) {
-                return res.status(401).send("Invalid Token Error");
-            }
+    if (schema !== "Bearer")
+      return res.status(401).send("Invalid Token Schema");
 
-            const user = (await findUser(decoded.id)).rows[0];
+    jwt.verify(token, process.env.SECRET_KEY, async (error, decoded) => {
+      if (error) {
+        return res.status(401).send("Invalid Token Error");
+      }
 
-            if (!user || !user.id) return res.status(401).send("Invalid User Token");
-            req.user_id = decoded.id;
-            res.locals.session = token;
+      const user = (await findUser(decoded.id)).rows[0];
 
-            next();
-        });
-    } catch (error) {
-        return res.status(500).send(error);
-    }
-}
+      if (!user || !user.id) return res.status(401).send("Invalid User Token");
+      req.user_id = decoded.id;
+
+      res.locals.session = token;
+
+      next();
+    });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+
