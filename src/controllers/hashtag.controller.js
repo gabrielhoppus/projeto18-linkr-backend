@@ -24,7 +24,7 @@ export async function getHashTags(req,res){
 
         const listOfHashTags = await hashTagRepository.fromHashTag();
 
-        return res.send(listOfHashTags.rows[0]).status(200);
+        return res.send(listOfHashTags.rows).status(200);
 
     } catch (error) {
         return res.status(500).send(error);
