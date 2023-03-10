@@ -5,7 +5,7 @@
 -- Dumped from database version 15.1
 -- Dumped by pg_dump version 15.1
 
--- Started on 2023-03-07 19:01:07
+-- Started on 2023-03-10 20:35:54
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,20 +23,20 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 217 (class 1259 OID 33095)
+-- TOC entry 221 (class 1259 OID 33444)
 -- Name: comments; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.comments (
     id integer NOT NULL,
-    comment character varying(255) NOT NULL,
-    user_id bigint NOT NULL,
-    hashtag_id bigint NOT NULL
+    comment character varying(240) NOT NULL,
+    user_id integer NOT NULL,
+    hashtag_id integer NOT NULL
 );
 
 
 --
--- TOC entry 216 (class 1259 OID 33094)
+-- TOC entry 220 (class 1259 OID 33443)
 -- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -50,8 +50,8 @@ CREATE SEQUENCE public.comments_id_seq
 
 
 --
--- TOC entry 3407 (class 0 OID 0)
--- Dependencies: 216
+-- TOC entry 3395 (class 0 OID 0)
+-- Dependencies: 220
 -- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -59,19 +59,19 @@ ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
 
 
 --
--- TOC entry 225 (class 1259 OID 33127)
+-- TOC entry 223 (class 1259 OID 33461)
 -- Name: followers; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.followers (
     id integer NOT NULL,
-    followed_by bigint NOT NULL,
-    user_id bigint NOT NULL
+    followed_by integer NOT NULL,
+    user_id integer NOT NULL
 );
 
 
 --
--- TOC entry 224 (class 1259 OID 33126)
+-- TOC entry 222 (class 1259 OID 33460)
 -- Name: followers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -85,8 +85,8 @@ CREATE SEQUENCE public.followers_id_seq
 
 
 --
--- TOC entry 3408 (class 0 OID 0)
--- Dependencies: 224
+-- TOC entry 3396 (class 0 OID 0)
+-- Dependencies: 222
 -- Name: followers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -94,19 +94,19 @@ ALTER SEQUENCE public.followers_id_seq OWNED BY public.followers.id;
 
 
 --
--- TOC entry 219 (class 1259 OID 33102)
+-- TOC entry 227 (class 1259 OID 33490)
 -- Name: hashtag_posts; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.hashtag_posts (
     id integer NOT NULL,
-    hashtag_id bigint NOT NULL,
-    post_id bigint NOT NULL
+    hashtag_id integer NOT NULL,
+    post_id integer NOT NULL
 );
 
 
 --
--- TOC entry 218 (class 1259 OID 33101)
+-- TOC entry 226 (class 1259 OID 33489)
 -- Name: hashtag_posts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -120,8 +120,8 @@ CREATE SEQUENCE public.hashtag_posts_id_seq
 
 
 --
--- TOC entry 3409 (class 0 OID 0)
--- Dependencies: 218
+-- TOC entry 3397 (class 0 OID 0)
+-- Dependencies: 226
 -- Name: hashtag_posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -129,7 +129,7 @@ ALTER SEQUENCE public.hashtag_posts_id_seq OWNED BY public.hashtag_posts.id;
 
 
 --
--- TOC entry 215 (class 1259 OID 33088)
+-- TOC entry 217 (class 1259 OID 33423)
 -- Name: hashtags; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -140,7 +140,7 @@ CREATE TABLE public.hashtags (
 
 
 --
--- TOC entry 214 (class 1259 OID 33087)
+-- TOC entry 216 (class 1259 OID 33422)
 -- Name: hashtags_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -154,8 +154,8 @@ CREATE SEQUENCE public.hashtags_id_seq
 
 
 --
--- TOC entry 3410 (class 0 OID 0)
--- Dependencies: 214
+-- TOC entry 3398 (class 0 OID 0)
+-- Dependencies: 216
 -- Name: hashtags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -163,19 +163,19 @@ ALTER SEQUENCE public.hashtags_id_seq OWNED BY public.hashtags.id;
 
 
 --
--- TOC entry 223 (class 1259 OID 33120)
+-- TOC entry 225 (class 1259 OID 33473)
 -- Name: likes; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.likes (
     id integer NOT NULL,
-    user_id bigint NOT NULL,
-    post_id bigint NOT NULL
+    user_id integer NOT NULL,
+    post_id integer NOT NULL
 );
 
 
 --
--- TOC entry 222 (class 1259 OID 33119)
+-- TOC entry 224 (class 1259 OID 33472)
 -- Name: likes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -189,8 +189,8 @@ CREATE SEQUENCE public.likes_id_seq
 
 
 --
--- TOC entry 3411 (class 0 OID 0)
--- Dependencies: 222
+-- TOC entry 3399 (class 0 OID 0)
+-- Dependencies: 224
 -- Name: likes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -198,54 +198,23 @@ ALTER SEQUENCE public.likes_id_seq OWNED BY public.likes.id;
 
 
 --
--- TOC entry 229 (class 1259 OID 33141)
--- Name: pictures; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.pictures (
-    id integer NOT NULL,
-    picture text NOT NULL
-);
-
-
---
--- TOC entry 228 (class 1259 OID 33140)
--- Name: pictures_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.pictures_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- TOC entry 3412 (class 0 OID 0)
--- Dependencies: 228
--- Name: pictures_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.pictures_id_seq OWNED BY public.pictures.id;
-
-
---
--- TOC entry 227 (class 1259 OID 33134)
+-- TOC entry 219 (class 1259 OID 33430)
 -- Name: posts; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.posts (
     id integer NOT NULL,
-    text character varying(255) NOT NULL,
-    user_id bigint NOT NULL,
-    picture_id bigint NOT NULL
+    user_id integer NOT NULL,
+    comment character varying(240) NOT NULL,
+    url character varying(255) NOT NULL,
+    title character varying(255) NOT NULL,
+    description character varying(255) NOT NULL,
+    image character varying(255) NOT NULL
 );
 
 
 --
--- TOC entry 226 (class 1259 OID 33133)
+-- TOC entry 218 (class 1259 OID 33429)
 -- Name: posts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -259,8 +228,8 @@ CREATE SEQUENCE public.posts_id_seq
 
 
 --
--- TOC entry 3413 (class 0 OID 0)
--- Dependencies: 226
+-- TOC entry 3400 (class 0 OID 0)
+-- Dependencies: 218
 -- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -268,22 +237,22 @@ ALTER SEQUENCE public.posts_id_seq OWNED BY public.posts.id;
 
 
 --
--- TOC entry 221 (class 1259 OID 33109)
+-- TOC entry 215 (class 1259 OID 33412)
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.users (
     id integer NOT NULL,
-    username character varying(255) NOT NULL,
-    password text NOT NULL,
-    picture text NOT NULL,
-    email character varying(255) NOT NULL,
+    username character varying(50) NOT NULL,
+    password character varying(255) NOT NULL,
+    picture character varying(255) NOT NULL,
+    email character varying(50) NOT NULL,
     token text
 );
 
 
 --
--- TOC entry 220 (class 1259 OID 33108)
+-- TOC entry 214 (class 1259 OID 33411)
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -297,8 +266,8 @@ CREATE SEQUENCE public.users_id_seq
 
 
 --
--- TOC entry 3414 (class 0 OID 0)
--- Dependencies: 220
+-- TOC entry 3401 (class 0 OID 0)
+-- Dependencies: 214
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -306,7 +275,7 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- TOC entry 3209 (class 2604 OID 33098)
+-- TOC entry 3206 (class 2604 OID 33447)
 -- Name: comments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -314,7 +283,7 @@ ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.com
 
 
 --
--- TOC entry 3213 (class 2604 OID 33130)
+-- TOC entry 3207 (class 2604 OID 33464)
 -- Name: followers id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -322,7 +291,7 @@ ALTER TABLE ONLY public.followers ALTER COLUMN id SET DEFAULT nextval('public.fo
 
 
 --
--- TOC entry 3210 (class 2604 OID 33105)
+-- TOC entry 3209 (class 2604 OID 33493)
 -- Name: hashtag_posts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -330,7 +299,7 @@ ALTER TABLE ONLY public.hashtag_posts ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 3208 (class 2604 OID 33091)
+-- TOC entry 3204 (class 2604 OID 33426)
 -- Name: hashtags id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -338,7 +307,7 @@ ALTER TABLE ONLY public.hashtags ALTER COLUMN id SET DEFAULT nextval('public.has
 
 
 --
--- TOC entry 3212 (class 2604 OID 33123)
+-- TOC entry 3208 (class 2604 OID 33476)
 -- Name: likes id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -346,15 +315,7 @@ ALTER TABLE ONLY public.likes ALTER COLUMN id SET DEFAULT nextval('public.likes_
 
 
 --
--- TOC entry 3215 (class 2604 OID 33144)
--- Name: pictures id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.pictures ALTER COLUMN id SET DEFAULT nextval('public.pictures_id_seq'::regclass);
-
-
---
--- TOC entry 3214 (class 2604 OID 33137)
+-- TOC entry 3205 (class 2604 OID 33433)
 -- Name: posts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -362,7 +323,7 @@ ALTER TABLE ONLY public.posts ALTER COLUMN id SET DEFAULT nextval('public.posts_
 
 
 --
--- TOC entry 3211 (class 2604 OID 33112)
+-- TOC entry 3203 (class 2604 OID 33415)
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -370,72 +331,64 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- TOC entry 3389 (class 0 OID 33095)
--- Dependencies: 217
+-- TOC entry 3383 (class 0 OID 33444)
+-- Dependencies: 221
 -- Data for Name: comments; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 
 
 --
--- TOC entry 3397 (class 0 OID 33127)
--- Dependencies: 225
+-- TOC entry 3385 (class 0 OID 33461)
+-- Dependencies: 223
 -- Data for Name: followers; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 
 
 --
--- TOC entry 3391 (class 0 OID 33102)
--- Dependencies: 219
+-- TOC entry 3389 (class 0 OID 33490)
+-- Dependencies: 227
 -- Data for Name: hashtag_posts; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 
 
 --
--- TOC entry 3387 (class 0 OID 33088)
--- Dependencies: 215
+-- TOC entry 3379 (class 0 OID 33423)
+-- Dependencies: 217
 -- Data for Name: hashtags; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 
 
 --
--- TOC entry 3395 (class 0 OID 33120)
--- Dependencies: 223
+-- TOC entry 3387 (class 0 OID 33473)
+-- Dependencies: 225
 -- Data for Name: likes; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 
 
 --
--- TOC entry 3401 (class 0 OID 33141)
--- Dependencies: 229
--- Data for Name: pictures; Type: TABLE DATA; Schema: public; Owner: -
---
-
-
-
---
--- TOC entry 3399 (class 0 OID 33134)
--- Dependencies: 227
+-- TOC entry 3381 (class 0 OID 33430)
+-- Dependencies: 219
 -- Data for Name: posts; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 
 
 --
--- TOC entry 3393 (class 0 OID 33109)
--- Dependencies: 221
+-- TOC entry 3377 (class 0 OID 33412)
+-- Dependencies: 215
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 
 
 --
--- TOC entry 3415 (class 0 OID 0)
--- Dependencies: 216
+-- TOC entry 3402 (class 0 OID 0)
+-- Dependencies: 220
 -- Name: comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -443,8 +396,8 @@ SELECT pg_catalog.setval('public.comments_id_seq', 1, false);
 
 
 --
--- TOC entry 3416 (class 0 OID 0)
--- Dependencies: 224
+-- TOC entry 3403 (class 0 OID 0)
+-- Dependencies: 222
 -- Name: followers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -452,8 +405,8 @@ SELECT pg_catalog.setval('public.followers_id_seq', 1, false);
 
 
 --
--- TOC entry 3417 (class 0 OID 0)
--- Dependencies: 218
+-- TOC entry 3404 (class 0 OID 0)
+-- Dependencies: 226
 -- Name: hashtag_posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -461,8 +414,8 @@ SELECT pg_catalog.setval('public.hashtag_posts_id_seq', 1, false);
 
 
 --
--- TOC entry 3418 (class 0 OID 0)
--- Dependencies: 214
+-- TOC entry 3405 (class 0 OID 0)
+-- Dependencies: 216
 -- Name: hashtags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -470,43 +423,34 @@ SELECT pg_catalog.setval('public.hashtags_id_seq', 1, false);
 
 
 --
--- TOC entry 3419 (class 0 OID 0)
--- Dependencies: 222
+-- TOC entry 3406 (class 0 OID 0)
+-- Dependencies: 224
 -- Name: likes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.likes_id_seq', 1, false);
+SELECT pg_catalog.setval('public.likes_id_seq', 4, true);
 
 
 --
--- TOC entry 3420 (class 0 OID 0)
--- Dependencies: 228
--- Name: pictures_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.pictures_id_seq', 1, false);
-
-
---
--- TOC entry 3421 (class 0 OID 0)
--- Dependencies: 226
+-- TOC entry 3407 (class 0 OID 0)
+-- Dependencies: 218
 -- Name: posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.posts_id_seq', 1, false);
+SELECT pg_catalog.setval('public.posts_id_seq', 16, true);
 
 
 --
--- TOC entry 3422 (class 0 OID 0)
--- Dependencies: 220
+-- TOC entry 3408 (class 0 OID 0)
+-- Dependencies: 214
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_id_seq', 4, true);
 
 
 --
--- TOC entry 3219 (class 2606 OID 33100)
+-- TOC entry 3219 (class 2606 OID 33449)
 -- Name: comments comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -515,7 +459,7 @@ ALTER TABLE ONLY public.comments
 
 
 --
--- TOC entry 3229 (class 2606 OID 33132)
+-- TOC entry 3221 (class 2606 OID 33466)
 -- Name: followers followers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -524,7 +468,7 @@ ALTER TABLE ONLY public.followers
 
 
 --
--- TOC entry 3221 (class 2606 OID 33107)
+-- TOC entry 3225 (class 2606 OID 33495)
 -- Name: hashtag_posts hashtag_posts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -533,7 +477,7 @@ ALTER TABLE ONLY public.hashtag_posts
 
 
 --
--- TOC entry 3217 (class 2606 OID 33093)
+-- TOC entry 3215 (class 2606 OID 33428)
 -- Name: hashtags hashtags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -542,7 +486,7 @@ ALTER TABLE ONLY public.hashtags
 
 
 --
--- TOC entry 3227 (class 2606 OID 33125)
+-- TOC entry 3223 (class 2606 OID 33478)
 -- Name: likes likes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -551,16 +495,7 @@ ALTER TABLE ONLY public.likes
 
 
 --
--- TOC entry 3233 (class 2606 OID 33148)
--- Name: pictures pictures_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.pictures
-    ADD CONSTRAINT pictures_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 3231 (class 2606 OID 33139)
+-- TOC entry 3217 (class 2606 OID 33437)
 -- Name: posts posts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -569,16 +504,16 @@ ALTER TABLE ONLY public.posts
 
 
 --
--- TOC entry 3223 (class 2606 OID 33118)
--- Name: users users_email_unique; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 3211 (class 2606 OID 33421)
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_email_unique UNIQUE (email);
+    ADD CONSTRAINT users_email_key UNIQUE (email);
 
 
 --
--- TOC entry 3225 (class 2606 OID 33116)
+-- TOC entry 3213 (class 2606 OID 33419)
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -587,96 +522,78 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3234 (class 2606 OID 33149)
--- Name: comments comments_hashtag_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 3227 (class 2606 OID 33455)
+-- Name: comments comments_hashtag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.comments
-    ADD CONSTRAINT comments_hashtag_id_foreign FOREIGN KEY (hashtag_id) REFERENCES public.hashtags(id);
+    ADD CONSTRAINT comments_hashtag_id_fkey FOREIGN KEY (hashtag_id) REFERENCES public.hashtags(id);
 
 
 --
--- TOC entry 3235 (class 2606 OID 33154)
--- Name: comments comments_user_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 3228 (class 2606 OID 33450)
+-- Name: comments comments_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.comments
-    ADD CONSTRAINT comments_user_id_foreign FOREIGN KEY (user_id) REFERENCES public.users(id);
+    ADD CONSTRAINT comments_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
--- TOC entry 3240 (class 2606 OID 33164)
--- Name: followers followers_followedby_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.followers
-    ADD CONSTRAINT followers_followedby_foreign FOREIGN KEY (followed_by) REFERENCES public.users(id);
-
-
---
--- TOC entry 3241 (class 2606 OID 33194)
--- Name: followers followers_user_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 3229 (class 2606 OID 33467)
+-- Name: followers followers_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.followers
-    ADD CONSTRAINT followers_user_id_foreign FOREIGN KEY (user_id) REFERENCES public.users(id);
+    ADD CONSTRAINT followers_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
--- TOC entry 3236 (class 2606 OID 33174)
--- Name: hashtag_posts hashtag_posts_hashtag_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.hashtag_posts
-    ADD CONSTRAINT hashtag_posts_hashtag_id_foreign FOREIGN KEY (hashtag_id) REFERENCES public.hashtags(id);
-
-
---
--- TOC entry 3237 (class 2606 OID 33189)
--- Name: hashtag_posts hashtag_posts_post_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 3232 (class 2606 OID 33501)
+-- Name: hashtag_posts hashtag_posts_hashtag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.hashtag_posts
-    ADD CONSTRAINT hashtag_posts_post_id_foreign FOREIGN KEY (post_id) REFERENCES public.posts(id);
+    ADD CONSTRAINT hashtag_posts_hashtag_id_fkey FOREIGN KEY (hashtag_id) REFERENCES public.hashtags(id);
 
 
 --
--- TOC entry 3238 (class 2606 OID 33184)
--- Name: likes likes_post_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 3233 (class 2606 OID 33496)
+-- Name: hashtag_posts hashtag_posts_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.hashtag_posts
+    ADD CONSTRAINT hashtag_posts_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.posts(id);
+
+
+--
+-- TOC entry 3230 (class 2606 OID 33484)
+-- Name: likes likes_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.likes
-    ADD CONSTRAINT likes_post_id_foreign FOREIGN KEY (post_id) REFERENCES public.posts(id);
+    ADD CONSTRAINT likes_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.posts(id);
 
 
 --
--- TOC entry 3239 (class 2606 OID 33159)
--- Name: likes likes_user_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 3231 (class 2606 OID 33479)
+-- Name: likes likes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.likes
-    ADD CONSTRAINT likes_user_id_foreign FOREIGN KEY (user_id) REFERENCES public.users(id);
+    ADD CONSTRAINT likes_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
--- TOC entry 3242 (class 2606 OID 33179)
--- Name: posts posts_picture_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.posts
-    ADD CONSTRAINT posts_picture_id_foreign FOREIGN KEY (picture_id) REFERENCES public.pictures(id);
-
-
---
--- TOC entry 3243 (class 2606 OID 33169)
--- Name: posts posts_user_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 3226 (class 2606 OID 33438)
+-- Name: posts posts_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.posts
-    ADD CONSTRAINT posts_user_id_foreign FOREIGN KEY (user_id) REFERENCES public.users(id);
+    ADD CONSTRAINT posts_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
--- Completed on 2023-03-07 19:01:07
+-- Completed on 2023-03-10 20:35:54
 
 --
 -- PostgreSQL database dump complete
