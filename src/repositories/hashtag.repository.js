@@ -12,6 +12,10 @@ function fromHashTagName (name) {
 
 }
 
+function fromHashTag () {
+    return db.query(`select * from hashtags`)
+}
+
 function postHashTag (name) {
     return db.query(
     `insert on hashtags (name) values ($1)`
@@ -19,6 +23,6 @@ function postHashTag (name) {
 
 }
 
-const hashTagRepository = {fromHashTagName,postHashTag}
+const hashTagRepository = {fromHashTagName,postHashTag,fromHashTag}
 
 export default hashTagRepository
