@@ -9,44 +9,43 @@ import {
 } from "../repositories/post.repository.js";
 import { findPosts } from "../repositories/user.repository.js";
 
-export async function publishPost(req, res){
+export async function publishPost(req, res) {
+  const token = res.locals.session;
+  const { url, comment } = req.body;
+  const urlTitle = "";
+  const urlDescription = "";
+  const urlImage = "";
 
-    const token = res.locals.session
-    const {url, comment} = req.body;
-    const urlTitle = '';
-    const urlDescription = '';
-    const urlImage = '';
+  const userRows = await getToken(token);
+  const user = userRows.rows[0];
 
-    const userRows = await getToken(token);
-    const user = userRows.rows[0];
-
-    urlMetadata(url).then(
+  urlMetadata(url).then(
     function (metadata) {
-        urlTitle = metadata.title;
-        urlDescription = metadata.description;
-        urlImage = metadata.image;
+      urlTitle = metadata.title;
+      urlDescription = metadata.description;
+      urlImage = metadata.image;
     },
     function (error) {
-        console.log(error)
-    })
-
-    try {
-        await savePost(user.id, comment, url, urlTitle, urlDescription, urlImage)
-        return res.sendStatus(201)
-    } catch (error) {
-        res.status(500).send(error.message);
+      console.log(error);
     }
-    
+  );
+
+  try {
+    await savePost(user.id, comment, url, urlTitle, urlDescription, urlImage);
+    return res.sendStatus(201);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 }
 
-export async function getPosts(req, res){
-    const posts = await sendPosts();
-    try {
-        if(posts.rows[0].length === 0) res.send("There are no posts yet");
-        res.send(posts.rows[0]);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
+export async function getPosts(req, res) {
+  const posts = await sendPosts();
+  try {
+    if (!posts.rowCount) res.send("There are no posts yet");
+    res.send(posts.rows);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 }
 
 export async function destroyPost(req, res) {
