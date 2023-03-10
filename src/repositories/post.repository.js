@@ -27,3 +27,10 @@ export async function deletePost(id) {
 export async function deleteHashtags(id) {
   return db.query(`DELETE * FROM hashtag_posts WHERE post_id = $1;`, [id]);
 }
+export async function patchPost(title, comment, id) {
+  return db.query(`PATCH posts SET title = $1, comment = $2 WHERE id = $3`, [
+    title,
+    comment,
+    id,
+  ]);
+}
