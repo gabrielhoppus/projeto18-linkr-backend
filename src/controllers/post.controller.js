@@ -1,5 +1,13 @@
 import urlMetadata from "url-metadata";
-import { savePost, sendPosts, getToken } from "../repositories/post.repository.js";
+import {
+  savePost,
+  sendPosts,
+  getToken,
+  deleteHashtags,
+  deletePost,
+  patchPost,
+} from "../repositories/post.repository.js";
+import { findPosts } from "../repositories/user.repository.js";
 
 export async function publishPost(req, res){
 
@@ -39,4 +47,39 @@ export async function getPosts(req, res){
     } catch (error) {
         res.status(500).send(error.message);
     }
+}
+
+export async function destroyPost(req, res) {
+  const { post_id } = req.params;
+  try {
+    const posts = await findPosts(post_id);
+    if (posts.rowCount === 0)
+      return res.status(404).send("post does not exist");
+
+    await deleteHashtags(post_id);
+
+    await deletePost(post_id);
+
+    res.status(204).send("deleted");
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
+export async function editPost(req, res) {
+  const { post_id } = req.params;
+  const { title, comment } = req.body;
+
+  try {
+    const post = await findPosts(post_id);
+    if (post.rowCount === 0) {
+      return res.status(404).send("post does not exist");
+    }
+
+    await patchPost(title, comment, post_id);
+
+    return res.status(201).send("post edited");
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 }
