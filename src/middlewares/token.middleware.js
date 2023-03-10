@@ -25,6 +25,9 @@ export async function validateToken(req, res, next) {
             if (!user || !user.id) 
                 return res.status(401).send("Invalid User Token")
         });
+        
+        res.locals.session = token
+        
         return next();
     } catch (error) {
         return res.status(500).send(error);
