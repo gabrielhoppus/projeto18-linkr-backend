@@ -1,5 +1,5 @@
 import {
-  finderUsers,
+  findUsers,
   findPosts,
   findUser,
 } from "../repositories/user.repository.js";
@@ -28,10 +28,10 @@ export async function getPosts(req, res) {
 }
 
 export async function searchUser(req, res) {
-  const userName = req.body;
+  const { username } = req.body;
 
   try {
-    const users = await finderUsers(userName);
+    const users = await findUsers(username);
     return res.status(201).send(users.rows);
   } catch (error) {
     return res.status(500).send(error);
