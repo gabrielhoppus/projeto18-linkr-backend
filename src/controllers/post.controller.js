@@ -32,8 +32,10 @@ export async function publishPost(req, res) {
   );
 
   try {
-    await savePost(user.id, comment, url, urlTitle, urlDescription, urlImage);
-    return res.sendStatus(201);
+    const postId = await savePost(user.id, comment, url, urlTitle, urlDescription, urlImage);
+    
+    return res.status(201).send(postId.rows[0]);
+    
   } catch (error) {
     res.status(500).send(error.message);
   }

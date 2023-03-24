@@ -13,16 +13,23 @@ function fromHashTagName (name) {
 }
 
 function fromHashTag () {
-    return db.query(`select * from hashtags`)
+    return db.query(`select  * from hashtags`)
 }
 
 function postHashTag (name) {
     return db.query(
-    `insert on hashtags (name) values ($1)`
+    `insert into hashtags (name) values ($1) RETURNING id`
     ,[name]);
 
 }
 
-const hashTagRepository = {fromHashTagName,postHashTag,fromHashTag}
+function postHashTagPost (hashtag_id,post_id) {
+    return db.query(
+    `insert into hashtag_posts(hashtag_id,post_id) values ($1,$2)`
+    ,[hashtag_id,post_id]);
+
+}
+
+const hashTagRepository = {fromHashTagName,postHashTag,fromHashTag,postHashTagPost}
 
 export default hashTagRepository
