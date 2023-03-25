@@ -15,7 +15,17 @@ export async function savePost(
 }
 
 export async function sendPosts() {
-  return db.query(`SELECT * FROM posts;`);
+  return db.query(`
+    SELECT 
+      COUNT(l.id) AS like_count,
+      u.username,
+      u.picture,
+      p.*
+    FROM posts p
+    JOIN users u ON p.user_id = u.id
+    LEFT JOIN likes l ON p.id = l.post_id
+    GROUP BY p.id, u.username, u.picture;
+  `);
 }
 
 export async function getToken(token) {
