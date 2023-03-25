@@ -13,7 +13,11 @@ function fromHashTagName (name) {
 }
 
 function fromHashTag () {
-    return db.query(`select  * from hashtags`)
+    return db.query(`SELECT COUNT(*) 
+    FROM hashtags 
+    GROUP BY hashtags.name 
+    ORDER BY COUNT(*) DESC; 
+    `)
 }
 
 function postHashTag (name) {
