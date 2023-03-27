@@ -32,10 +32,16 @@ export async function publishPost(req, res) {
   );
 
   try {
-    const postId = await savePost(user.id, comment, url, urlTitle, urlDescription, urlImage);
-    
+    const postId = await savePost(
+      user.id,
+      comment,
+      url,
+      urlTitle,
+      urlDescription,
+      urlImage
+    );
+
     return res.status(201).send(postId.rows[0]);
-    
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -44,7 +50,7 @@ export async function publishPost(req, res) {
 export async function getPosts(req, res) {
   const posts = await sendPosts();
   try {
-    if (!posts.rowCount) return res.send({message: "There are no posts yet"});
+    if (!posts.rowCount) return res.send({ message: "There are no posts yet" });
     return res.send(posts.rows);
   } catch (error) {
     res.status(500).send(error.message);
